@@ -1,0 +1,155 @@
+.section-one {
+  width: 100%;
+  background-image: url(../assets/editted-sunleaf.JPG);
+  background-size: cover;
+  background-position: center;
+  height: 35vh;
+  position: relative;
+}
+
+.navWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 30px;
+  background-color: #f0f8ff;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.9);
+  color: #070022;
+  border-radius: 0 0 15px 15px;
+  margin: 0 22px;
+}
+
+.logo {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.desktop_nav {
+  display: flex;
+}
+
+.navList {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  padding-left: 0;
+  margin: 0;
+}
+
+.navList li a {
+  color: #010030;
+  text-decoration: none;
+  font-size: 1rem;
+}
+.logout-button {
+  color: white;
+  background-color: #010030;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #00001a;
+}
+
+
+
+.navList li a:hover {
+  text-decoration: underline;
+}
+
+.menuToggle {
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: none; /* hide by default */
+}
+
+/* MOBILE STYLES */
+.mobile_nav {
+  display: none;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: fixed;
+  margin-top: -19rem;
+  right: 0;
+  height: 60vh;
+  width: 200px;
+  z-index: 999;
+  background-color: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  box-shadow: -10px 0px 10px rgba(0, 0, 0, 0.7);
+  padding: 1rem;
+}
+.mobile_nav.active {
+  display: flex;
+}
+
+.mobile_nav ul {
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+/* MEDIA QUERIES */
+@media (max-width: 768px) {
+  .desktop_nav {
+    display: none;
+  }
+  .logo {
+    font-size: 1.1rem;
+  }
+
+  .menuToggle {
+    display: block;
+    color: #010030;
+    margin-right: -40px; /* show toggle on mobile */
+  }
+}
+.bottom-deco {
+  display: flex;
+  position: relative;
+  align-items: center;
+  height: 50px;
+  color: #ffffff;
+  width: 95vw;
+  margin: auto;
+  border: 0px solid rgb(1, 0, 46);
+  margin-top: 210px;
+  border-radius: 15px 15px 0px 0px;
+  background-color: aliceblue;
+}
+.search-container {
+  flex: 1px;
+  padding: 8px;
+
+  margin-top: 2px;
+  margin-left: 37%;
+  margin-right: 1.5rem;
+  border-radius: 50px;
+  width: 60%;
+  max-width: 550px;
+  background-color: azure;
+  color: #010030;
+  border: 2px solid#0001139d;
+  border-color: rgba(6, 0, 37, 0.993);
+  font-size: 0.5rem;
+}
+.search-button {
+  position: absolute;
+  right: 26px;
+  top: 51%;
+  transform: translateY(-50%);
+  padding: 7px 15px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 0.5rem;
+}
+
