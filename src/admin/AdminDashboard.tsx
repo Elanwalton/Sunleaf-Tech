@@ -1,10 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from '../styles/adminDashboard.module.css';
+import Sidebar from '../components/Admin_sideBar';
 
 const AdminDashboard: React.FC = () => {
   return (
+    
     <div className={styles.dashboardContainer}>
+      <Sidebar/>
       <h1 className={styles.header}>Admin Dashboard</h1>
 
       <div className={styles.section}>

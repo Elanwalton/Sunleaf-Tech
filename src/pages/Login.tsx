@@ -1,20 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import styles from "../styles/SignUp.module.css";
 import { FaEnvelope, FaKey } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { AuthContext } from "../context/AuthContext";
-import { useContext } from "react";
-
 
 interface LoginResponse {
   message: string;
-  sessionId: string;
   user: {
-  id: number;
-  email: string;
-  role: string;
+    id: number;
+    email: string;
+    role: string;
   };
 }
 
@@ -23,10 +20,9 @@ const Login: React.FC = () => {
     email: "",
     password: "",
   });
-
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-   // Access setUserRole from the context
-   const { setUserRole } = useContext(AuthContext);
+  const { setUserRole } = useContext(AuthContext);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -37,6 +33,7 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
 
     try {
       const response = await axios.post<LoginResponse>(
@@ -45,42 +42,46 @@ const Login: React.FC = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            
           },
           withCredentials: true,
         }
       );
+
       console.log("Login response:", response.data);
 
       if (response.data.message === "Login successful") {
         const role = response.data.user.role.toLowerCase();
-        const sessionId = response.data.sessionId;
-       
-
-        // Save to localStorage or context
-        localStorage.setItem("userRole", role);
-        localStorage.setItem("sessionId", sessionId);
-        console.log("Stored role:", localStorage.getItem("userRole"));// console log
+        
+        // Save to context and localStorage
         setUserRole(role);
+        localStorage.setItem("userRole", role);
+        localStorage.setItem("userEmail", response.data.user.email);
+        localStorage.setItem("userId", response.data.user.id.toString());
 
         toast.success("Login successful!");
-        // console.log(response.data);
+        
         // Redirect based on role
         setTimeout(() => {
-          if (role === "admin") {
-            navigate("/admin-dashboard");
-          } else if (role === "customer") {
-            navigate("/shop");
-          } else {
-            navigate("/"); // fallback
-          }
+          navigate(role === "admin" ? "/admin-dashboard" : "/shop");
         }, 1000);
-      } else {
-        toast.error("Login failed: " + response.data.message);
       }
     } catch (error: any) {
       console.error("Login error:", error);
-      toast.error("Login failed. Please try again later.");
+      
+      if (error.response) {
+        // Handle specific error messages from server
+        const errorMessage = error.response.data?.message || "Invalid credentials";
+        toast.error(`Login failed: ${errorMessage}`);
+        
+        // Clear form on invalid credentials
+        if (error.response.status === 401) {
+          setFormData({ email: formData.email, password: "" });
+        }
+      } else {
+        toast.error("Network error. Please check your connection.");
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -101,6 +102,7 @@ const Login: React.FC = () => {
               required
               value={formData.email}
               onChange={handleChange}
+              autoComplete="username"
             />
             <FaEnvelope className={styles.icon} />
           </div>
@@ -114,18 +116,20 @@ const Login: React.FC = () => {
               required
               value={formData.password}
               onChange={handleChange}
+              autoComplete="current-password"
             />
             <FaKey className={styles.icon} />
           </div>
 
-          <button type="submit" id="login" className={styles.btn} name="submit">
-            Login
+          <button 
+            type="submit" 
+            className={styles.btn} 
+            disabled={isLoading}
+          >
+            {isLoading ? "Logging in..." : "Login"}
           </button>
 
-          <div
-            className="Register-link"
-            style={{ marginTop: "10px", textAlign: "center" }}
-          >
+          <div style={{ marginTop: "10px", textAlign: "center" }}>
             <p style={{ color: "white" }}>
               Don't have an account?{" "}
               <Link to="/signup" style={{ color: "lightblue" }}>

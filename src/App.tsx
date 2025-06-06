@@ -3,28 +3,23 @@ import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { AuthContext } from './context/AuthContext';
 import AdminDashboard from './admin/AdminDashboard';
 import ProductManagement from './admin/ProductManagement';
-import OrderManagement from './admin/OrderManagement';
-import UserManagement from './admin/UserManagement';
-import PaymentManagement from './admin/PaymentManagement';
-import Reports from './admin/Reports';
-import Reviews from './admin/Reviews';
-import Messages from './admin/Messages';
+// import OrderManagement from './admin/OrderManagement';
+// import UserManagement from './admin/UserManagement';
+// import PaymentManagement from './admin/PaymentManagement';
+// import Reports from './admin/Reports';
+// import Reviews from './admin/Reviews';
+// import Messages from './admin/Messages';
 import Header from './components/Header';
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FullPageSpinner } from './components/FullPageSpinner';
-// import Shop from './customer/Shop';
-// import AddToCartButton from './components/Cart';    //TO CHANGE LATER
-// import Home from './pages/Home';
-// import Unauthorized from './pages/Unauthorized';
-// import NotFound from './pages/NotFound';
-
 const App: React.FC = () => {
-  const { userRole, loading } = useContext(AuthContext);
+  const { userRole, isLoading, userData } = useContext(AuthContext); // Use isLoading
   const location = useLocation();
 
+  if (isLoading) return <FullPageSpinner />;
   // Routes where header should be hidden
   const hideHeaderRoutes = [
     "/signup", 
@@ -44,7 +39,7 @@ const App: React.FC = () => {
     "/messages"
   ];
 
-  if (loading) return <FullPageSpinner />;
+  if (isLoading) return <FullPageSpinner />;
 
   return (
     <>
@@ -55,47 +50,31 @@ const App: React.FC = () => {
 
       <Routes>
         {/* Public Routes */}
-        {/* <Route path="/" element={<Home />} /> */}
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<Login />} />
-        {/* <Route path="/unauthorized" element={<Unauthorized />} /> */}
+        <Route path="/signup" element={
+          userData.id ? <Navigate to={userRole === 'admin' ? '/admin-dashboard' : '/'} replace /> : <SignUp />
+        } />
+        <Route path="/login" element={
+          userData.id ? <Navigate to={userRole === 'admin' ? '/admin-dashboard' : '/'} replace /> : <Login />
+        } />
 
         {/* Protected Admin Routes */}
         <Route path="/admin-dashboard" element={
-          userRole === 'admin' ? <AdminDashboard /> : <Navigate to="/unauthorized" replace />
+          userRole === 'admin' ? <AdminDashboard /> : <Navigate to="/login" state={{ from: location }} replace />
         } />
         <Route path="/product-management" element={
-          userRole === 'admin' ? <ProductManagement /> : <Navigate to="/unauthorized" replace />
+          userRole === 'admin' ? <ProductManagement /> : <Navigate to="/login" state={{ from: location }} replace />
         } />
-        <Route path="/order-management" element={
-          userRole === 'admin' ? <OrderManagement /> : <Navigate to="/unauthorized" replace />
-        } />
-        <Route path="/user-management" element={
-          userRole === 'admin' ? <UserManagement /> : <Navigate to="/unauthorized" replace />
-        } />
-        <Route path="/payment-management" element={
-          userRole === 'admin' ? <PaymentManagement /> : <Navigate to="/unauthorized" replace />
-        } />
-        <Route path="/reports" element={
-          userRole === 'admin' ? <Reports /> : <Navigate to="/unauthorized" replace />
-        } />
-        <Route path="/reviews" element={
-          userRole === 'admin' ? <Reviews /> : <Navigate to="/unauthorized" replace />
-        } />
-        <Route path="/messages" element={
-          userRole === 'admin' ? <Messages /> : <Navigate to="/unauthorized" replace />
-        } />
+        {/* Other admin routes... */}
 
         {/* Customer Routes */}
-        {/* <Route path="/shop" element={
-          userRole === 'customer' || userRole === 'admin' ? <Shop /> : <Navigate to="/login" replace />
-        } /> */}
-        {/* <Route path="/cart" element={
-          userRole === 'customer' || userRole === 'admin' ? <AddToCartButton /> : <Navigate to="/login" replace />
-        } /> */}
+        {/* <Route path="/" element={
+          userData.id ? <Home /> : <Navigate to="/login" state={{ from: location }} replace />
+        } />
 
-        {/* Catch-all Route */}
-        {/* <Route path="*" element={<NotFound />} /> */}
+        {/* Redirect to login for unknown routes when not authenticated */}
+        {/* <Route path="*" element={
+          userData.id ? <NotFound /> : <Navigate to="/login" state={{ from: location }} replace />
+        } /> */} 
       </Routes>
 
       <ToastContainer

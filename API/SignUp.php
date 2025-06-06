@@ -1,10 +1,10 @@
 <?php
-header("Access-Control-Allow-Origin: *"); // for development only // RECCOMENDED header("Access-Control-Allow-Origin: https://your-frontend.com");
+header("Access-Control-Allow-Origin: http://localhost:5173");
 
 header("Access-Control-Allow-Headers: Content-Type");
 header("Access-Control-Allow-Methods: POST");
 
-include 'connection.php'; // your DB connection file
+include 'connection.php';
 
 $data = json_decode(file_get_contents("php://input"), true);
 
