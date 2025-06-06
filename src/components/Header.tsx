@@ -1,10 +1,11 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, } from "react-router-dom";
 import styles from "../styles/Header.module.css";
 import { useState } from "react";
 import { FaShoppingCart } from "react-icons/fa";
 import LogoutButton from "../components/LogoutButton";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+
 
 const Header = () => {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -96,7 +97,7 @@ const Header = () => {
               ) : (
                 <li>
                   <Link to="/login">
-                    <button className="login-btn">Login</button>
+                    <button className="logout-button">Login</button>
                   </Link>
                 </li>
               )}
