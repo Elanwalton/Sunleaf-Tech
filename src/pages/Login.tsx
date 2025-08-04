@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import axios from "axios";
+import api from "../library/axiosConfig";
 import styles from "../styles/SignUp.module.css";
 import { FaEnvelope, FaKey } from "react-icons/fa";
 import { toast } from "react-toastify";
@@ -13,6 +13,7 @@ interface LoginResponse {
     email: string;
     role: string;
   };
+  session_id?: string;
 }
 
 const Login: React.FC = () => {
@@ -22,7 +23,7 @@ const Login: React.FC = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const { setUserRole } = useContext(AuthContext);
+  const { setUser } = useContext(AuthContext);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -36,49 +37,36 @@ const Login: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post<LoginResponse>(
-        "http://192.168.0.107/Sunleaf-Tech/api/Login.php",
-        formData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
+      const { data } = await api.post<LoginResponse>("/Login.php", formData,
+         { withCredentials: true }    
       );
-
-      console.log("Login response:", response.data);
-
-      if (response.data.message === "Login successful") {
-        const role = response.data.user.role.toLowerCase();
+      
+      if (data.message === "Login successful") {
+        const userData = {
+          id: data.user.id,
+          email: data.user.email,
+          role: data.user.role.toLowerCase()
+        };
         
         // Save to context and localStorage
-        setUserRole(role);
-        localStorage.setItem("userRole", role);
-        localStorage.setItem("userEmail", response.data.user.email);
-        localStorage.setItem("userId", response.data.user.id.toString());
+        setUser(userData);
+        localStorage.setItem("user", JSON.stringify(userData));
 
         toast.success("Login successful!");
         
         // Redirect based on role
-        setTimeout(() => {
-          navigate(role === "admin" ? "/admin-dashboard" : "/shop");
-        }, 1000);
+        navigate(userData.role === "admin" ? "/admin-dashboard" : "/Home");
       }
     } catch (error: any) {
       console.error("Login error:", error);
       
       if (error.response) {
-        // Handle specific error messages from server
-        const errorMessage = error.response.data?.message || "Invalid credentials";
-        toast.error(`Login failed: ${errorMessage}`);
-        
-        // Clear form on invalid credentials
+        toast.error(error.response.data?.message || "Login failed");
         if (error.response.status === 401) {
-          setFormData({ email: formData.email, password: "" });
+          setFormData(prev => ({ ...prev, password: "" }));
         }
       } else {
-        toast.error("Network error. Please check your connection.");
+        toast.error(error.message || "Network error");
       }
     } finally {
       setIsLoading(false);
@@ -88,7 +76,7 @@ const Login: React.FC = () => {
   return (
     <div className={styles.pageWrapper}>
       <div className={styles.container}>
-        <form id="form1" onSubmit={handleSubmit} method="POST">
+        <form onSubmit={handleSubmit}>
           <div className={styles["tag-header"]}>
             <h1>Login</h1>
           </div>
@@ -96,7 +84,6 @@ const Login: React.FC = () => {
           <div className={styles["input-box"]}>
             <input
               type="email"
-              id="email"
               name="email"
               placeholder="Email"
               required
@@ -110,7 +97,6 @@ const Login: React.FC = () => {
           <div className={styles["input-box"]}>
             <input
               type="password"
-              id="password"
               name="password"
               placeholder="Password"
               required
@@ -121,20 +107,14 @@ const Login: React.FC = () => {
             <FaKey className={styles.icon} />
           </div>
 
-          <button 
-            type="submit" 
-            className={styles.btn} 
-            disabled={isLoading}
-          >
+          <button type="submit" className={styles.btn} disabled={isLoading}>
             {isLoading ? "Logging in..." : "Login"}
           </button>
 
-          <div style={{ marginTop: "10px", textAlign: "center" }}>
-            <p style={{ color: "white" }}>
+          <div className={styles.footer}>
+            <p>
               Don't have an account?{" "}
-              <Link to="/signup" style={{ color: "lightblue" }}>
-                Register
-              </Link>
+              <Link to="/signup">Register</Link>
             </p>
           </div>
         </form>

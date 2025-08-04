@@ -3,7 +3,7 @@
   background-image: url(../assets/editted-sunleaf.JPG);
   background-size: cover;
   background-position: center;
-  height: 35vh;
+  height: 33vh;
   position: relative;
 }
 
@@ -109,7 +109,7 @@
   .menuToggle {
     display: block;
     color: #010030;
-    margin-right: -40px; /* show toggle on mobile */
+    margin-right: -20px; /* show toggle on mobile */
   }
 }
 .bottom-deco {
@@ -125,12 +125,12 @@
   border-radius: 15px 15px 0px 0px;
   background-color: aliceblue;
 }
+
 .search-container {
   flex: 1px;
   padding: 8px;
-
   margin-top: 2px;
-  margin-left: 37%;
+  margin-left: 1%;
   margin-right: 1.5rem;
   border-radius: 50px;
   width: 60%;
@@ -139,18 +139,18 @@
   color: #010030;
   border: 2px solid#0001139d;
   border-color: rgba(6, 0, 37, 0.993);
-  font-size: 0.5rem;
+  font-size: 0.65rem;
 }
 .search-button {
   position: absolute;
   right: 26px;
-  top: 51%;
+  top: 52%;
   transform: translateY(-50%);
   padding: 7px 15px;
   border: none;
   border-radius: 25px;
   cursor: pointer;
-  font-size: 0.5rem;
+  font-size: 0.6rem;
   background-color: #05001b;
   color: #fafafa;
 }

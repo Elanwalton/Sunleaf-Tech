@@ -43,6 +43,7 @@ try {
                 "id" => $_SESSION['user']['id'],
                 "email" => $_SESSION['user']['email'] ?? '',
                 "role" => $_SESSION['user']['role'] ?? 'user'
+                
             ]
         ]);
     } else {

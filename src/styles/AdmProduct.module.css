@@ -1,0 +1,189 @@
+.container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  color: #333;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #1a1a1a;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 24px;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.card {
+  background: white;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.card .label {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.card .value {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.card .change {
+  font-size: 12px;
+}
+
+.card .green {
+  color: #22c55e;
+}
+
+.card .red {
+  color: #ef4444;
+}
+
+.controls {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.search {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.select {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  background: white;
+}
+
+.button {
+  padding: 10px 16px;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: #2563eb;
+}
+
+.tableWrapper {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th {
+  text-align: left;
+  padding: 12px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #666;
+  background: #f9fafb;
+  border-bottom: 1px solid #eee;
+}
+
+.table td {
+  padding: 16px;
+  font-size: 14px;
+  border-bottom: 1px solid #eee;
+}
+
+.productName {
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.productDescription {
+  font-size: 13px;
+  color: #666;
+}
+
+.status {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.statusPink {
+  background: #fce7f3;
+  color: #ec4899;
+}
+
+.statusPurple {
+  background: #f3e8ff;
+  color: #a855f7;
+}
+
+.statusYellow {
+  background: #fef9c3;
+  color: #ca8a04;
+}
+
+.ratingCell {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.starActive {
+  color: #f59e0b;
+}
+
+.starInactive {
+  color: #d1d5db;
+}
+
+.ratingValue {
+  margin-left: 4px;
+  font-size: 12px;
+  color: #666;
+}
+
+.actionButton {
+  padding: 6px 12px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.actionButton:hover {
+  background: #f9fafb;
+}

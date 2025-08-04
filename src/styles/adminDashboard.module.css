@@ -1,8 +1,91 @@
+/* Main admin container */
+.adminRootContainer {
+  position: relative;
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    "sidebar topbar"
+    "sidebar content";
+  min-height: 100vh;
+}
+
+/* Background only for admin */
+.adminBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url(../assets/admbg.svg);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  z-index: -1; 
+}
+
+/* Sidebar area */
+.sidebar {
+  grid-area: sidebar;
+  background: rgba(223, 223, 224, 0.9); 
+}.topBar {
+  height: 100px;
+  width: calc(100% - 250px); 
+  position: fixed;
+  left: 250px; 
+  top: 0;
+  right: 0; 
+  z-index: 1000;
+  background-image: url("src/assets/admbg.svg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  display: flex;
+  justify-content: space-between; 
+  padding: 0 20px
+}
+.greetings {
+  color: #FFD700;           
+  font-size: 1.2rem;       
+  font-weight: 7290;         
+  text-shadow: 0 0 8px #00eeff,  
+               0 0 12px #00ffea;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.greetings span {
+  color: #ffee00;           
+  font-style: italic;
+}
+
+.profileholder {
+  width: 80%;
+  height: 65px; 
+  color: #f0f8ff; 
+  border-radius: 1%; 
+  background-color: transparent; 
+  margin-right: 0px;
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
 .dashboardContainer {
-    padding: 40px;
+    grid-area: content;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.85);
+    padding-top: 40px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #000c1f;
+    background-color: #f0f8ff;
+    flex: 1;
+    margin-left: 250px;
+    margin-top: 150px;
     min-height: 100vh;
+    border-radius: 30px;
   }
   
   .header {
@@ -31,7 +114,7 @@
     background-color: white;
     padding: 20px;
     border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    box-shadow: 0 8px 8px rgba(255, 20, 20, 0.05);
     font-weight: 500;
     color: #555;
   }

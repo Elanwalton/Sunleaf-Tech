@@ -1,0 +1,17 @@
+
+.cat-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: none;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.cat-icon {
+  width: 30px;
+  height: 30px;
+}

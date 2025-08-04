@@ -1,103 +1,140 @@
-/* .card {
-    width: 100%;
-    max-width: 300px;
-    background-color: #fff;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    margin: 15px;
-    transition: transform 0.3s ease-in-out;
+/* Base Card Styles (Mobile First) */
+.card {
+  width: 198px;
+  padding: 0.9rem;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  box-sizing: border-box;
+  overflow: hidden;
+  height: auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Internal Layout Structure */
+.image {
+  width: 90px;
+  height: 90px;
+  object-fit: contain;
+  margin: 0 auto 10px;
+}
+
+.title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 6px 0;
+  line-height: 1.2;
+}
+
+.price {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 4px 0;
+}
+
+.rating {
+  font-size: 0.75rem;
+  color: #f39c12;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: auto; /* Pushes buttons to bottom */
+}
+
+.cartBtn,
+.buyBtn {
+  flex: 1;
+  margin: 4px;
+  padding: 6px 10px;
+  font-size: 0.75rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.cartBtn {
+  background: #f5f5f5;
+  color: #000;
+}
+
+.buyBtn {
+  background: #000;
+  color: #fff;
+}
+
+/* Tablet */
+@media (min-width: 600px) {
+  .card {
+    width: 240px;
+    padding: 1rem;
   }
-  
-  .card:hover {
-    transform: scale(1.05);
-  }
-  
+}
+
   .image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-bottom: 1px solid #ddd;
+    width: 100px;
+    height: 100px;
   }
-  
-  .name {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin: 15px;
-    color: #333;
+
+  .title {
+    font-size: 1rem;
   }
-  
-  .rating {
-    margin: 0 15px 10px;
-    color: #FFD700; /* Gold color for stars */
-    /* font-size: 1rem;
-  }
-  
+
   .price {
-    margin: 0 15px;
     font-size: 1.1rem;
-    font-weight: bold;
-    color: #700000; /* The color you've chosen for your theme 
   }
-  
-  .actions {
-    display: flex;
-    justify-content: space-between;
-    padding: 15px;
+
+  .rating {
+    font-size: 0.85rem;
   }
-  
+
   .cartBtn,
   .buyBtn {
-    background-color: #700000; /* Button background color 
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 25px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-size: 0.8rem;
   }
-  
-  .cartBtn:hover,
-  .buyBtn:hover {
-    background-color: #5c0000; /* Darker shade on hover 
+
+@media (max-width: 599px) {
+  .card {
+    flex: 1 1 calc(50% - 1rem); /* Two cards per row on small screens */
+    max-width: 170px;
   }
-  
-  .cartBtn:focus,
-  .buyBtn:focus {
-    outline: none;
+  .cartBtn,
+  .buyBtn {
+    font-size: 0.52rem;
   }
-  
-  .cartBtn:disabled,
-  .buyBtn:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .card {
+    width: 260px;
+    padding: 1.2rem;
   }
-  @media (max-width: 600px) {
-    .card {
-      max-width: 100%;
-      margin: 10px;
-    }
-  
-    .image {
-      height: 180px; /* Adjusted image height for smaller screens 
-    }
-  
-    .name {
-      font-size: 1rem;
-    }
-  
-    .rating {
-      font-size: 0.9rem;
-    }
-  
-    .price {
-      font-size: 1rem;
-    }
-  
-    .cartBtn,
-    .buyBtn {
-      font-size: 0.9rem;
-      padding: 8px 16px;
-    } */
-  
+
+  .image {
+    width: 110px;
+    height: 110px;
+  }
+
+  .title {
+    font-size: 1.1rem;
+  }
+
+  .price {
+    font-size: 1.2rem;
+  }
+
+  .rating {
+    font-size: 0.9rem;
+  }
+
+  .cartBtn,
+  .buyBtn {
+    font-size: 0.85rem;
+  }
+}

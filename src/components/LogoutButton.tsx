@@ -1,27 +1,27 @@
-import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../context/AuthContext"; // adjust path if needed
+import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 const LogoutButton = () => {
   const navigate = useNavigate();
-  const { setUserRole } = useContext(AuthContext);
+  const { clearSession, setUser } = useContext(AuthContext);  
 
   const handleLogout = async () => {
     try {
-      await fetch("http://192.168.0.107/Sunleaf-Tech/api/logout.php", {
-        method: "POST",
-        credentials: "include", // to send PHP session cookie
+      // hit the PHP logout endpoint THROUGH the proxy
+      await fetch('/api/Logout.php', {            
+        method: 'POST',
+        credentials: 'include',
       });
 
-      // Clear local storage + context
-      localStorage.removeItem("userRole");
-      localStorage.removeItem("sessionId");
-      setUserRole(null);
+      // clear React state + any extras you stored
+      setUser(null);                              
+      localStorage.removeItem('userRole');
+      localStorage.removeItem('sessionId');
 
-      // Redirect to login
-      navigate("/login");
-    } catch (error) {
-      console.error("Logout error:", error);
+      navigate('/login');
+    } catch (err) {
+      console.error('Logout error:', err);
     }
   };
 

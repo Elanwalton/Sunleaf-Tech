@@ -1,59 +1,58 @@
 .sidebar {
+  background:inherit; 
+  color: white;
   width: 250px;
   height: 100vh;
-  background-color: #1e1e2f; /* dark sidebar */
-  color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: 20px 0;
+  padding: 20px;
   position: fixed;
-  top: 0;
   left: 0;
+  top: 100px;
+  z-index: 10;
 }
 
-.logo {
-  font-size: 1.8rem;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 30px;
-  color: #fff;
+.sidebarLogo {
+  font-size: 24px;
+  font-weight: 700;
+  padding: 0 2px 24px;
+  margin: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.menu,
-.bottomMenu {
-  padding: 0 20px;
+.sidebarNav {
+  padding: 24px 0;
 }
 
-.menu ul,
-.bottomMenu ul {
+.sidebarMenu {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.menu li,
-.bottomMenu li {
-  margin-bottom: 20px;
+.sidebarItem {
+  margin-bottom: 4px;
 }
 
-a {
-  display: flex;
-  align-items: center;
-  color: #ccc;
-  text-decoration: none;
+.sidebarLink {
+  display: block;
+  width: 100%;
+  padding: 12px 24px;
+  color: #e0e0e0;
+  background: transparent;
+  border: none;
+  text-align: left;
   font-size: 16px;
-  transition: color 0.3s, background 0.3s;
-  padding: 10px;
-  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-a:hover {
+.sidebarLink:hover {
+  background-color: rgba(255, 255, 255, 0.1);
   color: #ffffff;
-  background-color: #2d2d44;
 }
 
-a svg {
-  margin-right: 12px;
-  font-size: 18px;
+.sidebarLinkActive {
+  background-color: #ffffff;
+  color: #2a3647;
+  font-weight: 600;
 }

@@ -1,95 +1,99 @@
 import React, { useContext } from 'react';
 import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { AuthContext } from './context/AuthContext';
-import AdminDashboard from './admin/AdminDashboard';
+
 import ProductManagement from './admin/ProductManagement';
-// import OrderManagement from './admin/OrderManagement';
-// import UserManagement from './admin/UserManagement';
-// import PaymentManagement from './admin/PaymentManagement';
-// import Reports from './admin/Reports';
-// import Reviews from './admin/Reviews';
-// import Messages from './admin/Messages';
+import DashboardStats from './admin/DashboardStats';
+import OrderManagement from './admin/OrderManagement';
+import UserManagement from './admin/UserManagement';
+import PaymentManagement from './admin/PaymentManagement';
+import ViewQuote from './admin/ViewQuote';
+import Reviews from './admin/Reviews';
+
 import Header from './components/Header';
+import { FullPageSpinner } from './components/FullPageSpinner';
+
+import ClientLayout from './admin/ClientLayout';
+import AdminLayout from './admin/AdminLayout';
+
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { FullPageSpinner } from './components/FullPageSpinner';
+import HomePage from './pages/Homepage';
+import ProductList from './BridgeComponents/ProductList';
+
+import './App.css';
+
+
 const App: React.FC = () => {
-  const { userRole, isLoading, userData } = useContext(AuthContext); // Use isLoading
+  const { userRole, isLoading, isAuthenticated } = useContext(AuthContext);
   const location = useLocation();
 
   if (isLoading) return <FullPageSpinner />;
-  // Routes where header should be hidden
-  const hideHeaderRoutes = [
-    "/signup", 
-    "/login",
-    "/unauthorized"
-  ];
 
-  // All admin routes for cleaner code
-  const adminRoutes = [
-    "/admin-dashboard",
-    "/product-management",
-    "/order-management",
-    "/user-management",
-    "/payment-management",
-    "/reports",
-    "/reviews",
-    "/messages"
-  ];
-
-  if (isLoading) return <FullPageSpinner />;
+  const noHeaderRoutes = ['/login', '/signup', '/unauthorized'];
+  const showHeader =
+    !noHeaderRoutes.includes(location.pathname) &&
+    !location.pathname.startsWith('/admin-dashboard');
 
   return (
-    <>
-      {/* Show header except on auth pages */}
-      {!hideHeaderRoutes.includes(location.pathname) && !adminRoutes.includes(location.pathname) && (
-        <Header />
-      )}
+    <div className="app-container">
+      {showHeader && <Header />}
 
-      <Routes>
-        {/* Public Routes */}
-        <Route path="/signup" element={
-          userData.id ? <Navigate to={userRole === 'admin' ? '/admin-dashboard' : '/'} replace /> : <SignUp />
-        } />
-        <Route path="/login" element={
-          userData.id ? <Navigate to={userRole === 'admin' ? '/admin-dashboard' : '/'} replace /> : <Login />
-        } />
+      <main className="main-content">
+        <Routes>
+          {/* redirect root to /home */}
+          <Route path="/" element={<Navigate to="/home" replace />} />
 
-        {/* Protected Admin Routes */}
-        <Route path="/admin-dashboard" element={
-          userRole === 'admin' ? <AdminDashboard /> : <Navigate to="/login" state={{ from: location }} replace />
-        } />
-        <Route path="/product-management" element={
-          userRole === 'admin' ? <ProductManagement /> : <Navigate to="/login" state={{ from: location }} replace />
-        } />
-        {/* Other admin routes... */}
+          {/* Home layout with nested ProductList */}
+          <Route path="/home" element={<HomePage />}>
+            {/* /home */}
+            <Route index element={<ProductList />} />
+            {/* /home/product-list */}
+            <Route path="product-list" element={<ProductList />} />
+          </Route>
 
-        {/* Customer Routes */}
-        {/* <Route path="/" element={
-          userData.id ? <Home /> : <Navigate to="/login" state={{ from: location }} replace />
-        } />
+          {/* Public pages */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
 
-        {/* Redirect to login for unknown routes when not authenticated */}
-        {/* <Route path="*" element={
-          userData.id ? <NotFound /> : <Navigate to="/login" state={{ from: location }} replace />
-        } /> */} 
-      </Routes>
+          {/* Protected Client Routes */}
+          <Route
+            element={
+              isAuthenticated ? (
+                <ClientLayout />
+              ) : (
+                <Navigate to="/login" state={{ from: location }} replace />
+              )
+            }
+          >
+            {/* add client routes here */}
+          </Route>
 
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
-    </>
+          {/* Admin Routes */}
+          <Route
+            path="/admin-dashboard"
+            element={
+              userRole === 'admin' ? (
+                <AdminLayout />
+              ) : (
+                <Navigate to="/login" state={{ from: location }} replace />
+              )
+            }
+          >
+            <Route index element={<DashboardStats />} />
+            <Route path="product-management" element={<ProductManagement />} />
+            <Route path="order-management" element={<OrderManagement />} />
+            <Route path="user-management" element={<UserManagement />} />
+            <Route path="payment-management" element={<PaymentManagement />} />
+            <Route path="reviews" element={<Reviews />} />
+            <Route path="view-quote" element={<ViewQuote />} />
+          </Route>
+
+          {/* Catch–all: redirect unknown paths to /home */}
+          <Route path="*" element={<Navigate to="/home" replace />} />
+        </Routes>
+      </main>
+    </div>
   );
 };
 
